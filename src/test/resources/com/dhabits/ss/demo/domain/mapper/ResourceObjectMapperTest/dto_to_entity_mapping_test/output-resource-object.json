@@ -1,0 +1,14 @@
+{
+  "id": null,
+  "value": "test value",
+  "path": "get/users",
+  "active": false,
+  "password": null,
+  "roles": null,
+  "enabled": false,
+  "credentialsNonExpired": true,
+  "accountNonExpired": true,
+  "username": "test value",
+  "accountNonLocked": true,
+  "authorities": null
+}

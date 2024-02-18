@@ -1,0 +1,8 @@
+{
+  "id": 1,
+  "value": "test value2",
+  "path": "get/users2",
+  "active": true,
+  "password": null,
+  "roles": null
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="5" author="Maxim">
+        <loadData schemaName="db_ss" tableName="object_roles" file="csv/ObjectRole.csv" relativeToChangelogFile="true" separator=";">
+
+            <column name="object_id" type="numeric" defaultValueNumeric="0"/>
+            <column name="role_id" type="numeric" defaultValueNumeric="0"/>
+
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

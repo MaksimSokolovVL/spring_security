@@ -1,14 +1,14 @@
 package com.dhabits.ss.demo.domain.model;
 
-import lombok.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResourceObject {
-
-    private int id;
+public class ResourceObjectDto {
     private String value;
     private String path;
-
 }

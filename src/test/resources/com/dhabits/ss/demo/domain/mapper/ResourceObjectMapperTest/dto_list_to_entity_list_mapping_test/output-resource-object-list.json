@@ -1,0 +1,30 @@
+[
+  {
+    "id": null,
+    "value": "test value3",
+    "path": "get/users3",
+    "active": false,
+    "password": null,
+    "roles": null,
+    "enabled": false,
+    "credentialsNonExpired": true,
+    "accountNonExpired": true,
+    "username": "test value3",
+    "accountNonLocked": true,
+    "authorities": null
+  },
+  {
+    "id": null,
+    "value": "test value4",
+    "path": "get/users4",
+    "active": false,
+    "password": null,
+    "roles": null,
+    "enabled": false,
+    "credentialsNonExpired": true,
+    "accountNonExpired": true,
+    "username": "test value4",
+    "accountNonLocked": true,
+    "authorities": null
+  }
+]

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2" author="Maxim">
+        <loadData schemaName="db_ss" tableName="resource_ob" file="csv/Resource.csv" relativeToChangelogFile="true" separator=";">
+
+            <column name="id" type="numeric" defaultValueNumeric="0"/>
+            <column name="value" type="STRING"/>
+            <column name="path" type="STRING"/>
+            <column name="active" type="BOOLEAN"/>
+            <column name="password" type="STRING"/>
+        </loadData>
+
+        <rollback>
+            <delete tableName="resource_ob"/>
+        </rollback>
+
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="1" author="Maxim">
+        <createTable schemaName="db_ss" tableName="resource_ob" remarks="Сущность ресурсного объекта">
+            <column name="id" type="bigserial" autoIncrement="false" remarks="ID">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="value" type="varchar(40)" remarks="Значение">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="path" type="varchar(50)" remarks="Путь">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="active" type="boolean" remarks="Активный">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(255)" remarks="Пароль">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+<!--        <addForeignKeyConstraint baseTableName="user_roles"-->
+<!--                                 baseColumnNames="role_id"-->
+<!--                                 constraintName="fk_user_roles_role"-->
+<!--                                 referencedTableName="role"-->
+<!--                                 referencedColumnNames="id"/>-->
+<!--        <addForeignKeyConstraint baseTableName="user_roles"-->
+<!--                                 baseColumnNames="user_id"-->
+<!--                                 constraintName="fk_user_roles_user"-->
+<!--                                 referencedTableName="user"-->
+<!--                                 referencedColumnNames="id"/>-->
+
+        <rollback>
+            <dropTable tableName="resource_ob"/>
+        </rollback>
+
+    </changeSet>
+</databaseChangeLog>

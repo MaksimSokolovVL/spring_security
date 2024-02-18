@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "value": "test value5",
+    "path": "get/users5",
+    "active": true,
+    "password": null,
+    "roles": null
+  },
+  {
+    "id": 2,
+    "value": "test value6",
+    "path": "get/users6",
+    "active": true,
+    "password": null,
+    "roles": null
+  }
+]

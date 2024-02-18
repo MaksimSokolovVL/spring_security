@@ -1,0 +1,12 @@
+[
+  {
+    "id": null,
+    "roleName": "ROLE_ADMIN",
+    "authority": "ROLE_ADMIN"
+  },
+  {
+    "id": null,
+    "roleName": "ROLE_USER",
+    "authority": "ROLE_USER"
+  }
+]

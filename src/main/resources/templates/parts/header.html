@@ -1,0 +1,30 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<div class="shadow-sm p-3 mb-5 bg-body rounded" th:fragment="content">
+    <header class="header">
+        <div class="login-logout">
+            <a href="/">
+                <button class="button btn btn-outline-primary">Home</button>
+            </a>
+            <a th:href="@{/admin}" sec:authorize="hasRole('ROLE_ADMIN')">
+                <button class="button btn btn-outline-primary">Admin</button>
+            </a>
+            <a th:href="@{/user}" sec:authorize="hasRole('ROLE_USER')">
+                <button class="button btn btn-outline-primary">User</button>
+            </a>
+
+            <a th:href="@{/login}" sec:authorize="isAnonymous()">
+                <button class="button btn btn-outline-primary">Log in</button>
+            </a>
+            <form  th:action="@{/logout}" method="post"
+                   sec:authorize="isAuthenticated()">
+                <input class="button btn btn-outline-primary" type="submit" value="Log Out"/>
+            </form>
+            <a th:href="@{/registration}" sec:authorize="isAnonymous()">
+                <button class="button btn btn-outline-primary">Registration</button>
+            </a>
+        </div>
+    </header>
+</div>
+</html>
