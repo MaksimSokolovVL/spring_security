@@ -13,8 +13,6 @@ import java.util.Arrays;
 import java.util.Set;
 
 @TestConfiguration
-@EnableWebSecurity
-@EnableMethodSecurity
 public class TestSecurityConfig {
     @Bean
     public UserDetailsService userDetailsService() {

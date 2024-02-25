@@ -74,8 +74,6 @@ public class WebSecurityConfig {
 //                .passwordEncoder(NoOpPasswordEncoder.getInstance());
 //
 //    }
-
-
 //                .passwordEncoder(passwordEncoder());
 
 }
