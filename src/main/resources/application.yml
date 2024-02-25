@@ -35,7 +35,8 @@ spring:
     database: postgresql
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/kek
+#    url: jdbc:postgresql://localhost:5432/kek
+    url: jdbc:postgresql://postgres:5432/kek
     username: root
     password: 123
 

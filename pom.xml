@@ -24,7 +24,7 @@
         <junit.version>5.10.2</junit.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <swagger-annotations.version>2.2.8</swagger-annotations.version>
-        <!--        <springdoc-openapi-ui.version>1.6.15</springdoc-openapi-ui.version>-->
+        <springdoc-openapi-ui.version>1.6.15</springdoc-openapi-ui.version>
         <!--        <streamex.version>0.8.1</streamex.version>-->
     </properties>
     <dependencies>
@@ -102,6 +102,19 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
+
+        <!-- Swagger -->
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${swagger-annotations.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${springdoc-openapi-ui.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -145,11 +158,9 @@
                             <artifactId>mapstruct-processor</artifactId>
                             <version>${mapstruct.version}</version>
                         </annotationProcessorPath>
-                        <compilerArgs>
-                            <compilerArg>
-                                -Amapstruct.defaultComponentModel=spring
-                            </compilerArg>
-                        </compilerArgs>
+<!--                        <compilerArgs>-->
+<!--                            <compilerArg>-Amapstruct.defaultComponentModel=spring</compilerArg>-->
+<!--                        </compilerArgs>-->
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
