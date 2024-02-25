@@ -26,7 +26,6 @@ public class WebSecurityConfig {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web -> web
                 .ignoring()
-//                .requestMatchers(new AntPathRequestMatcher("/resource", HttpMethod.POST.name()))
                 .requestMatchers(
                         new AntPathRequestMatcher("/"),
                         new AntPathRequestMatcher("/h2"),
@@ -42,18 +41,17 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                .headers(x -> x.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
+//                .headers(x -> x.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
-                .formLogin(AbstractHttpConfigurer::disable)
+//                .formLogin(AbstractHttpConfigurer::disable)
                 .userDetailsService(userService)
                 .authorizeHttpRequests(authz -> authz
-                        .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
+//                        .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
-                        .requestMatchers("/user").hasAuthority("USER")
+                        .requestMatchers("/user").hasRole("USER")
                         .requestMatchers(HttpMethod.POST, "/resource").permitAll()
                         .requestMatchers(HttpMethod.POST, "/resource/role").hasRole("ADMIN")
-
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())
@@ -79,18 +77,5 @@ public class WebSecurityConfig {
 
 
 //                .passwordEncoder(passwordEncoder());
-
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user =
-//                User.withDefaultPasswordEncoder()
-//                        .username("user")
-//                        .password("user")
-//                        .roles("USER")
-//                        .build();
-//
-//        return new InMemoryUserDetailsManager(user);
-//    }
-
 
 }

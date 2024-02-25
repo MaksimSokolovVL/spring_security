@@ -47,9 +47,8 @@ spring:
 logging:
   level:
     org:
-      hibernate:
       springframework:
-        security=DEBUG:
+        security: DEBUG
 
 server:
   port: 9000

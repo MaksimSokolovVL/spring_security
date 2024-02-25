@@ -7,7 +7,4 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserService extends UserDetailsService {
 
-    ResourceObject getUserById(long id);
-
-    ResourceObject findByUsername(String username);
 }

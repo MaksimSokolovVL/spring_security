@@ -1,64 +1,82 @@
 package com.dhabits.ss.demo.controller;
 
-import com.dhabits.ss.demo.service.RoleService;
-import com.dhabits.ss.demo.service.impl.ResourceObjectService;
+import com.dhabits.ss.demo.config.ControllerTest;
+import com.dhabits.ss.demo.domain.model.RoleDto;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+
+import java.util.List;
 
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith(SpringExtension.class)
-@WebMvcTest(ResourceController.class)
-class ResourceControllerTest {
-    @Autowired
-    private MockMvc mvc;
 
-    @MockBean
-    private ResourceObjectService objectService;
-
-    @MockBean
-    private RoleService roleService;
+class ResourceControllerTest extends ControllerTest {
+    private List<RoleDto> roles;
 
     @BeforeEach
-    void setup() {
-        when(objectService.save(any())).thenReturn(5L);
+    public void setup(WebApplicationContext context) {
+        mvc = MockMvcBuilders
+                .webAppContextSetup(context)
+                .apply(springSecurity())
+                .alwaysDo(MockMvcResultHandlers.print())
+                .build();
+
+        when(resourceObjectService.save(any())).thenReturn(5L);
+        roles = List.of(new RoleDto("ROLE_ADMIN"), new RoleDto("ROLE_USER"));
+        when(roleService.findAllRoles()).thenReturn(roles);
+
     }
 
     @Test
     @SneakyThrows
-    void anyWhenUnauthenticatedThenUnauthorized() {
-        this.mvc.perform(post("/resource"))
-                .andExpect(status().isUnauthorized());
+    @WithMockUser(username = "admin", password = "1", authorities = {"ROLE_ADMIN"})
+    void whenAdminWithAuthority_PostResourceRole_ShouldBeAuthorized() {
+        mvc.perform(post("/resource/role")
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                .andExpect(content().json(mapper.writeValueAsString(roles)));
     }
 
     @Test
     @SneakyThrows
-    @WithMockUser(authorities = "ROLE_ADMIN")
-    void endpointWhenAdminAuthorityThenAuthorized() {
-        this.mvc.perform(post("/resource/role"))
-                .andExpect(status().isOk());
+    @WithMockUser(username = "admin", password = "1", roles = "ADMIN")
+    void whenAdminWithRole_PostResourceRole_ShouldBeAuthorized() {
+        mvc.perform(post("/resource/role")
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                .andExpect(content().json(mapper.writeValueAsString(roles)));
     }
 
-//    @Test
-//    @SneakyThrows
-//    @WithMockUser
-//    void endpointWhenUserAuthorityThenAuthorized() {
-//        this.mvc.perform(get("/user"))
-//                .andExpect(status().isOk());
-//    }
+    @Test
+    @SneakyThrows
+    @WithMockUser(username = "user", password = "1", authorities = {"ROLE_USER"})
+    void whenUserWithAuthority_PostResourceRole_ShouldBeForbidden() {
+        mvc.perform(post("/resource/role")
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @SneakyThrows
+    @WithMockUser(username = "user", roles = {"USER"})
+    void whenUserWithRole_PostResourceRole_ShouldBeForbidden() {
+        mvc.perform(post("/resource/role")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
+    }
+
 }

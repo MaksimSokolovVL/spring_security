@@ -22,8 +22,4 @@ public class RoleServiceImpl implements RoleService {
     public List<RoleDto> findAllRoles() {
         return mapper.toDtoList(roleRepo.findAll());
     }
-
-    public RoleEntity findByRoleName(String roleName) {
-        return roleRepo.findByRoleName(roleName);
-    }
 }

@@ -18,18 +18,6 @@ public class UserDetailsServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public ResourceObject getUserById(long id) {
-        return resourceRepo.findById(id).orElse(null);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public ResourceObject findByUsername(String username) {
-        return resourceRepo.findByValue(username).orElse(null);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         ResourceObject resource = resourceRepo.findByValue(username)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("There is no resource with this LOGIN: %s", username)));

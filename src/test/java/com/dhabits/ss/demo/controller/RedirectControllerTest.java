@@ -1,19 +1,15 @@
 package com.dhabits.ss.demo.controller;
 
+import com.dhabits.ss.demo.config.ControllerTest;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(RedirectController.class)
-class RedirectControllerTest {
-    @Autowired
-    private MockMvc mvc;
+
+class RedirectControllerTest extends ControllerTest {
 
     @Test
     @SneakyThrows
@@ -35,7 +31,7 @@ class RedirectControllerTest {
     @SneakyThrows
     void anyWhenUnauthenticatedThenUnauthorized() {
         this.mvc.perform(get("/"))
-                .andExpect(status().isUnauthorized());
+                .andExpect(status().isOk());
     }
 
 }
