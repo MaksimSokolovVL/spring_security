@@ -1,5 +1,5 @@
-ID;value;PATH;ACTIVE;PASSWORD
-1;admin;path-1;true;1
-2;user;path-2;true;1
+ID;value;name;PATH;AGE;ACTIVE;PASSWORD
+1;admin;Maxim;path-1;39;true;$2a$08$6DGpWVd0Tt4I.a/HQiTMRObK7AKJznDcGDOCOt3QJ4ZUv9rbwgs9O
+2;user;Kamilla;path-2;1;true;$2a$08$SX48e8covmXui05rEiCC0OrD75.OZEk1iAP8oj17OpOASITfPdNWm
 
 

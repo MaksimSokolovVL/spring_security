@@ -1,7 +1,7 @@
 package com.dhabits.ss.demo.config;
 
 import com.dhabits.ss.demo.config.security.WebSecurityConfig;
-import com.dhabits.ss.demo.controller.RedirectController;
+import com.dhabits.ss.demo.controller.AdminController;
 import com.dhabits.ss.demo.controller.ResourceController;
 import com.dhabits.ss.demo.service.RoleService;
 import com.dhabits.ss.demo.service.UserService;
@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 
 @WebMvcTest({
-        RedirectController.class,
+        AdminController.class,
         ResourceController.class
 })
 @Import({WebSecurityConfig.class, TestSecurityConfig.class})

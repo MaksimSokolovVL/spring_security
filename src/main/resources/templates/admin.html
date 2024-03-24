@@ -1,152 +1,252 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
           rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
           crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title></title>
 </head>
 <body>
-<div th:replace="parts/header :: content"></div>
-<h1>Admin Panel</h1>
-<!--<h1 class="top-h1">User accounting</h1>-->
-<!--<div class="my_container">-->
-<!--    <div class="my_table-container">-->
-<!--        <table class="table-class" id="table-id" name="table-name">-->
-<!--            <thead>-->
-<!--            <tr>-->
-<!--                <th>#</th>-->
-<!--                <th>Login</th>-->
-<!--                <th>Name</th>-->
-<!--                <th>Surname</th>-->
-<!--                <th>Age</th>-->
-<!--                <th>Roles</th>-->
-<!--                <th>Active</th>-->
-<!--                <th>Password</th>-->
-<!--                <th>Edit</th>-->
-<!--                <th>Delete</th>-->
-<!--            </tr>-->
-<!--            </thead>-->
-<!--            <tbody>-->
-<!--            <tr th:each="user, index  : ${users}">-->
+<div th:replace="~{parts/header_admin_user :: headerAU}"></div>
 
-<!--                <td th:text="${index.index + 1}"></td>-->
-<!--                <td th:text="${user.username}"></td>-->
-<!--                <td th:text="${user.name}"></td>-->
-<!--                <td th:text="${user.surname}"></td>-->
-<!--                <td th:text="${user.age}"></td>-->
-<!--                <td th:text="${user.roles}"></td>-->
-<!--                <td th:text="${user.active}"></td>-->
-<!--                <td th:text="${user.password}"></td>-->
+<div th:fragment="user_panel">
 
-<!--                <form th:action="@{admin/updateInfo(empId=${user.id})}" method="post">-->
-<!--                    <td>-->
-<!--                        <button class="btn btn-outline-info" type="submit">Update</button>-->
-<!--                    </td>-->
-<!--                </form>-->
-<!--                <form th:action="@{admin/deleteUser(empId=${user.id})}" method="post">-->
-<!--                    <td>-->
-<!--                        <button class="btn btn-outline-danger" type="submit">Delete</button>-->
-<!--                    </td>-->
-<!--                </form>-->
-<!--            </tr>-->
-<!--            </tbody>-->
-<!--        </table>-->
-<!--    </div>-->
-<!--    <br>-->
-<!--    <div class="button-container">-->
-<!--        <img class="img_gif" src="/img/edit1.gif" alt="#">-->
-<!--        <button class="btn btn-outline-success" type="submit" onclick="window.location.href = 'admin/addNewUser'">Add User</button>-->
-<!--    </div>-->
+    <div class="row container-fluid">
+        <div class="col-1 bg-col-1 container-fluid">
 
-<nav>
-    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
-                role="tab" aria-controls="nav-home" aria-selected="true">Admin
-        </button>
-        <!--        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button"-->
-        <!--                role="tab" aria-controls="nav-profile" aria-selected="false"-->
-        <!--                onclick="window.location.href = 'admin/addNewUser'">New User-->
-        <!--        </button>-->
-        <button class="nav-link" id="nav-new-user-tab" data-bs-toggle="tab" data-bs-target="#nav-new-user" type="button"
-                role="tab" aria-controls="navigation-new-user" aria-selected="false">New user
-        </button>
-    </div>
-</nav>
+            <!--   Button navs     -->
+            <div class="d-flex align-items-start">
+                <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical"
+                     style="margin-top: 20px">
 
-
-<div class="tab-content" id="nav-tabContent">
-    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
-
-        <h1 class="top-h1">User accounting</h1>
-        <div class="my_container">
-            <div class="my_table-container">
-                <table class="table-class" id="table-id" name="table-name">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Login</th>
-                        <th>Name</th>
-                        <th>Surname</th>
-                        <th>Age</th>
-                        <th>Roles</th>
-                        <th>Active</th>
-                        <th>Password</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="user, index  : ${users}">
-
-                        <td th:text="${index.index + 1}"></td>
-                        <td th:text="${user.username}"></td>
-                        <td th:text="${user.name}"></td>
-                        <td th:text="${user.surname}"></td>
-                        <td th:text="${user.age}"></td>
-                        <td th:text="${user.roles}"></td>
-                        <td th:text="${user.active}"></td>
-                        <td th:text="${user.password}"></td>
-
-                        <form th:action="@{admin/updateInfo(empId=${user.id})}" method="post">
-                            <td>
-                                <button class="btn btn-outline-info" type="submit">Update</button>
-                            </td>
-                        </form>
-                        <form th:action="@{admin/deleteUser(empId=${user.id})}" method="post">
-                            <td>
-                                <button class="btn btn-outline-danger" type="submit">Delete</button>
-                            </td>
-                        </form>
-                    </tr>
-                    </tbody>
-                </table>
+                    <button class="nav-link active button-nav" id="v-pills-home-tab" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home"
+                            aria-selected="true">Admin
+                    </button>
+                    <button class="nav-link button-nav" id="v-pills-profile-tab" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile"
+                            aria-selected="true">User
+                    </button>
+                </div>
             </div>
-            <br>
-            <div class="button-container">
-                <img class="img_gif" src="/img/edit1.gif" alt="#">
-                <button class="btn btn-outline-success" type="submit"
-                        onclick="window.location.href = 'admin/addNewUser'">Add User
-                </button>
-            </div>
-
         </div>
+        <!--        -->
+        <div class="col-11 bg-col-11">
+            <!--    ADMIN            -->
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                     aria-labelledby="v-pills-home-tab">
+                    <!--                    ...-->
 
+                    <h1>Admin Panel</h1>
 
-        <div class="tab-pane fade" id="nav-new-user" role="tabpanel" aria-labelledby="nav-new-user-tab" tabindex="0">
-            <!--            <div th:include="add_user :: addUser"></div>-->
-            <!--            <div th:replace="~{add_user}"></div>-->
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                                    type="button"
+                                    role="tab" aria-controls="home" aria-selected="true">
+                                Users List
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                                    type="button"
+                                    role="tab" aria-controls="profile" aria-selected="false">
+                                New User
+                            </button>
+                        </li>
+                    </ul>
 
+                    <div class="tab-content w-auto p-3" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="top-h4-no-diablo-div">
+                                <h4 class="top-h4-no-diablo">All Users</h4>
+                            </div>
+                            <div class="my_container">
+
+                                <div class="my_table-container table-responsive{ -sm|-md|-lg|-xl|-xxl } table-responsive">
+                                    <table class="table table-striped table-sm " id="table-id" name="table-name">
+                                        <thead>
+
+                                        <tr class="tr-border">
+                                            <th>#</th>
+                                            <th>Login</th>
+                                            <th>Name</th>
+                                            <th>Surname</th>
+                                            <th>Age</th>
+                                            <th>Roles</th>
+                                            <th>Active</th>
+                                            <!--                                        <th>Password</th>-->
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        <tr th:each="user, index  : ${users}">
+
+                                            <td th:text="${index.index + 1}"></td>
+                                            <td th:text="${user.value}"></td>
+                                            <td th:text="${user.name}"></td>
+                                            <td th:text="${user.path}"></td>
+                                            <td th:text="${user.age}"></td>
+                                            <td th:text="${user.roles}"></td>
+                                            <td th:text="${user.active}"></td>
+                                            <!--                                        <td th:text="${user.password}"></td>-->
+                                            <td class="td-button">
+                                                <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                                        data-bs-target="#exampleModal" th:data-user="${user}"
+                                                        th:onclick="'javascript:upInfoUser(' + ${user.id} + ')'">Edit
+                                                </button>
+                                            </td>
+                                            <td class="td-button">
+                                                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                                        data-bs-target="#exampleModal"
+                                                        th:onclick="'javascript:deleteInfo(' + ${user.id} + ')'"> Delete
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="top-h4-no-diablo-div">
+                                <h4 class="top-h4-no-diablo">Add new user</h4>
+                            </div>
+                            <div style="background-color: white" th:include="~{add_user :: addUser}"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--  USER   -->
+                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                    <h1>About User</h1>
+
+                    <div class="tab-content w-auto p-3" id="user-tab-content">
+                        <div class="tab-pane fade show active" id="user-home" role="tabpanel"
+                             aria-labelledby="home-tab">
+
+                            <div class="my_container">
+
+                                <div class="my_table-container table-responsive{ -sm|-md|-lg|-xl|-xxl } table-responsive">
+                                    <table class="table table-striped table-sm " id="user-table-id" name="table-name">
+                                        <thead>
+
+                                        <tr class="tr-border">
+                                            <th>ID</th>
+                                            <th>Login</th>
+                                            <th>Name</th>
+                                            <th>Surname</th>
+                                            <th>Age</th>
+                                            <th>Roles</th>
+                                            <th>Active</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        <tr>
+                                            <td th:text="${userIn.id}"></td>
+                                            <td th:text="${userIn.value}"></td>
+                                            <td th:text="${userIn.name}"></td>
+                                            <td th:text="${userIn.path}"></td>
+                                            <td th:text="${userIn.age}"></td>
+                                            <td th:text="${rolesList}"></td>
+                                            <td th:text="${userIn.active}"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
+<!-- Модальное окно -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form class="form_mod" id="form_mod_id">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body mx-auto p-2">
+
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+                    <label class="label_mod" for="userId_mod">User ID</label><br>
+                    <input id="userId_mod" type="text" value="">
+                    <br>
+
+                    <label for="login_mod">Login</label><br>
+                    <input id="login_mod" type="text" value="">
+                    <br>
+                    <!---->
+                    <label for="name_mod">Name</label><br>
+                    <input id="name_mod" type="text" value="">
+                    <br>
+
+                    <label for="path_mod">Path</label><br>
+                    <input id="path_mod" type="text" value="">
+                    <br>
+
+                    <label for="age_mod">Age</label><br>
+                    <input id="age_mod" type="number" value="">
+                    <br>
+
+                    <label id="label_password_mod" for="password_mod">Password</label><br>
+                    <input id="password_mod" type="password" value="">
+                    <br>
+
+                    <!---->
+                    <label for="act_mod">Active:</label>
+                    <input type="checkbox" id="act_mod">
+                    <br>
+
+                    <select class="form-select" multiple id="roles_mod" name="roles" aria-label="" size="2">
+                        <th:block th:each="role : ${allRoles}">
+                            <option th:value="${role.roleName}" th:text="${role.roleName}"
+                                    th:selected="${role.roleName == 'ROLE_USER'}"></option>
+                        </th:block>
+                    </select>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="updateButton" type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                            onclick="saveUpUser()">Update
+                    </button>
+                    <button id="deleteButton" type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                            onclick="deleteUser()">Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+<script src="/js/script.js"></script>
 
 </body>
 </html>

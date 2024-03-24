@@ -5,14 +5,9 @@ import com.dhabits.ss.demo.domain.model.RoleDto;
 import org.mapstruct.Mapper;
 
 import java.util.List;
+import java.util.Set;
 
 @Mapper(componentModel = "spring")
-public interface RoleMapper {
-    RoleDto toDto(RoleEntity entity);
+public interface RoleMapper extends Mappable<RoleEntity, RoleDto> {
 
-    RoleEntity toEntity(RoleDto dto);
-
-    List<RoleDto> toDtoList(List<RoleEntity> entities);
-
-    List<RoleEntity> toEntityList(List<RoleDto> dtos);
 }

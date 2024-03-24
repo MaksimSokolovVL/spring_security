@@ -9,7 +9,9 @@
 
             <column name="id" type="numeric" defaultValueNumeric="0"/>
             <column name="value" type="STRING"/>
+            <column name="name" type="STRING"/>
             <column name="path" type="STRING"/>
+            <column name="age" type="NUMBER"/>
             <column name="active" type="BOOLEAN"/>
             <column name="password" type="STRING"/>
         </loadData>

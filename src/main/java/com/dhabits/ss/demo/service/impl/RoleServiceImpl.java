@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,5 +22,15 @@ public class RoleServiceImpl implements RoleService {
     @Transactional(readOnly = true)
     public List<RoleDto> findAllRoles() {
         return mapper.toDtoList(roleRepo.findAll());
+    }
+
+    @Override
+    public RoleEntity save(RoleEntity roleEntity) {
+        return roleRepo.save(roleEntity);
+    }
+
+    @Override
+    public Optional<RoleEntity> findByRoleName(String roleName) {
+        return roleRepo.findByRoleName(roleName);
     }
 }

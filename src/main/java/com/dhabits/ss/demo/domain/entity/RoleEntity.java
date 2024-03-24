@@ -1,9 +1,13 @@
 package com.dhabits.ss.demo.domain.entity;
 
+import com.dhabits.ss.demo.domain.model.emun.UserRole;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import lombok.Getter;
@@ -21,6 +25,8 @@ import java.util.Set;
 @Table(name = "role", schema = "db_ss" )
 public class RoleEntity implements GrantedAuthority {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_sequence")
+    @SequenceGenerator(name = "role_sequence", sequenceName = "role_sequence", allocationSize = 1)
     private Long id;
     @Column(name = "role_name")
     private String roleName;

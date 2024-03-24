@@ -1,7 +1,8 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-<div class="container-fluid shadow-sm p-3 mb-5 bg-body rounded" th:fragment="content">
+<div class="container-fluid" th:fragment="headerAU"
+     style="padding-left: 20px; padding-right: 20px; background-color: #262626FF">
     <header class="header">
         <div class="row">
             <div class="col-8">
@@ -9,13 +10,13 @@
                     <a href="/">
                         <button class="button btn btn-outline-primary">Home</button>
                     </a>
-                    <a th:href="@{/admin}" sec:authorize="hasRole('ROLE_ADMIN')">
-                        <button class="button btn btn-outline-primary">Admin</button>
-                    </a>
-                    <a th:href="@{/user}" sec:authorize="hasRole('ROLE_USER')">
-                        <button class="button btn btn-outline-primary">User</button>
-                    </a>
+                    <div style=" display: flex; align-items: center; margin-top: 15px; margin-left: 45px">
+                        <p style="color: white"> Login: <strong th:text="${userIn.value}"></strong>
+                            with roles:
+                            <span th:text="${rolesList}"></span></p>
+                    </div>
                 </div>
+
             </div>
             <div class="col-4">
                 <div class="d-flex justify-content-end">
@@ -27,7 +28,7 @@
                     </a>
                     <form th:action="@{/logout}" method="post"
                           sec:authorize="isAuthenticated()">
-                        <input class="button btn btn-outline-primary" type="submit" value="Log Out"/>
+                        <input class="button btn btn-outline-primary" type="submit" value="Logout"/>
                     </form>
                 </div>
             </div>

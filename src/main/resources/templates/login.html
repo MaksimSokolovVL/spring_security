@@ -9,7 +9,7 @@
           crossorigin="anonymous">
 </head>
 <body>
-<div th:replace="parts/header :: content"></div>
+<div th:replace="~{parts/header :: content}"></div>
 <br>
 
 <div th:if="${param.error}">
@@ -17,6 +17,9 @@
 </div>
 <div th:if="${param.logout}">
     You have been logged out.
+</div>
+<div class="error-message" th:if="${created_user}">
+    <p th:text="${created_user}"></p>
 </div>
 
 <h1 class="top-h1">Please sing in</h1>

@@ -9,11 +9,17 @@
             <column name="id" type="bigserial" autoIncrement="false" remarks="ID">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="value" type="varchar(40)" remarks="Значение">
+            <column name="value" type="varchar(40)" remarks="UserName">
                 <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="name" type="varchar(40)" remarks="Имя">
+                <constraints nullable="false" unique="false"/>
             </column>
             <column name="path" type="varchar(50)" remarks="Путь">
                 <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="age" type="int" remarks="Возраст">
+                <constraints nullable="false" unique="false"/>
             </column>
             <column name="active" type="boolean" remarks="Активный">
                 <constraints nullable="false"/>
@@ -23,16 +29,12 @@
             </column>
         </createTable>
 
-<!--        <addForeignKeyConstraint baseTableName="user_roles"-->
-<!--                                 baseColumnNames="role_id"-->
-<!--                                 constraintName="fk_user_roles_role"-->
-<!--                                 referencedTableName="role"-->
-<!--                                 referencedColumnNames="id"/>-->
-<!--        <addForeignKeyConstraint baseTableName="user_roles"-->
-<!--                                 baseColumnNames="user_id"-->
-<!--                                 constraintName="fk_user_roles_user"-->
-<!--                                 referencedTableName="user"-->
-<!--                                 referencedColumnNames="id"/>-->
+        <addForeignKeyConstraint baseTableName="object_roles"
+                                 baseColumnNames="object_id"
+                                 constraintName="fk_object_id"
+                                 referencedTableName="resource_ob"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
 
         <rollback>
             <dropTable tableName="resource_ob"/>

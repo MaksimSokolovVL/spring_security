@@ -22,6 +22,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class WebSecurityConfig {
     private final UserService userService;
 
+
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web -> web
@@ -31,10 +32,14 @@ public class WebSecurityConfig {
                         new AntPathRequestMatcher("/h2"),
                         new AntPathRequestMatcher("/header"),
                         new AntPathRequestMatcher("/index"),
+                        new AntPathRequestMatcher("/registration"),
                         new AntPathRequestMatcher("/h2/**"),
                         new AntPathRequestMatcher("/js/**"),
                         new AntPathRequestMatcher("/css/**"),
-                        new AntPathRequestMatcher("/img/**"))
+                        new AntPathRequestMatcher("/img/**"),
+                        new AntPathRequestMatcher("/swagger-ui/**"),
+                        new AntPathRequestMatcher("/v3/**"),
+                        new AntPathRequestMatcher("/error"))
         );
     }
 
@@ -42,7 +47,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
 //                .headers(x -> x.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
-                .csrf(AbstractHttpConfigurer::disable)
+//                .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
 //                .formLogin(AbstractHttpConfigurer::disable)
                 .userDetailsService(userService)

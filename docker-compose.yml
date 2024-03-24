@@ -12,12 +12,15 @@ services:
       - "5432:5432"
 
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile # Убедитесь, что это указывает на ваш Dockerfile
+    image: app:1.0.2 # Замените 1.0.0 на свою схему версионирования
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/kek
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 123
     ports:
-      - "9000:9000"
+      - "8080:8080"
     depends_on:
       - postgres
