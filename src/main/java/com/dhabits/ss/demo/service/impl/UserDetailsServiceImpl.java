@@ -4,6 +4,7 @@ import com.dhabits.ss.demo.domain.entity.ResourceObject;
 import com.dhabits.ss.demo.domain.entity.RoleEntity;
 import com.dhabits.ss.demo.domain.mapper.Mappable;
 import com.dhabits.ss.demo.domain.model.ResourceObjectDto;
+import com.dhabits.ss.demo.domain.model.ResourceObjectRq;
 import com.dhabits.ss.demo.repository.ResourceObjectRepository;
 import com.dhabits.ss.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -37,11 +38,15 @@ public class UserDetailsServiceImpl implements UserService {
         return resource;
     }
 
-
     @Override
     public List<ResourceObjectDto> getAllResourceObject() {
         return resourceRepo.findAll().stream().map(mapper::toDto).toList();
     }
 
+    @Override
+    public List<ResourceObjectRq> getPreparedResourceObjectRq() {
+        List<ResourceObjectDto> dtos = resourceRepo.findAll().stream().map(mapper::toDto).toList();
+       return dtos.stream().map(ResourceObjectRq::new).toList();
+    }
 
 }

@@ -2,7 +2,6 @@ package com.dhabits.ss.demo.config.security;
 
 
 import com.dhabits.ss.demo.service.UserService;
-import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,8 +10,6 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -22,26 +19,30 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class WebSecurityConfig {
     private final UserService userService;
 
+    private static final String[] PERMIT_URLS = {
+            "/",
+            "/h2",
+            "/header",
+            "/index",
+            "/registration",
+            "/h2/**",
+            "/js/**",
+            "/css/**",
+            "/img/**",
+            "/swagger-ui/**",
+            "/v3/**",
+            "/error",
+            "/swagger-resources/**"
+    };
 
-    @Bean
+
+/*    @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web -> web
                 .ignoring()
-                .requestMatchers(
-                        new AntPathRequestMatcher("/"),
-                        new AntPathRequestMatcher("/h2"),
-                        new AntPathRequestMatcher("/header"),
-                        new AntPathRequestMatcher("/index"),
-                        new AntPathRequestMatcher("/registration"),
-                        new AntPathRequestMatcher("/h2/**"),
-                        new AntPathRequestMatcher("/js/**"),
-                        new AntPathRequestMatcher("/css/**"),
-                        new AntPathRequestMatcher("/img/**"),
-                        new AntPathRequestMatcher("/swagger-ui/**"),
-                        new AntPathRequestMatcher("/v3/**"),
-                        new AntPathRequestMatcher("/error"))
+                .requestMatchers(PERMIT_URLS)
         );
-    }
+    }*/
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -53,11 +54,12 @@ public class WebSecurityConfig {
                 .userDetailsService(userService)
                 .authorizeHttpRequests(authz -> authz
 //                        .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
-                        .requestMatchers("/admin").hasRole("ADMIN")
-                        .requestMatchers("/user").hasRole("USER")
-                        .requestMatchers(HttpMethod.POST, "/resource").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/resource/role").hasRole("ADMIN")
-                        .anyRequest().authenticated()
+                                .requestMatchers("/admin").hasRole("ADMIN")
+                                .requestMatchers("/user").hasRole("USER")
+                                .requestMatchers(PERMIT_URLS).permitAll()
+                                .requestMatchers(HttpMethod.POST, "/resource").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/resource/role").hasRole("ADMIN")
+                                .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(form -> form
@@ -71,14 +73,4 @@ public class WebSecurityConfig {
                 )
                 .build();
     }
-
-
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userService)
-//                .passwordEncoder(NoOpPasswordEncoder.getInstance());
-//
-//    }
-//                .passwordEncoder(passwordEncoder());
-
 }

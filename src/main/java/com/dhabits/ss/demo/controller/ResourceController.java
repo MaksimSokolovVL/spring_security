@@ -3,8 +3,8 @@ package com.dhabits.ss.demo.controller;
 import com.dhabits.ss.demo.domain.mapper.ResourceObjectMapper;
 import com.dhabits.ss.demo.domain.model.ResourceObjectDto;
 import com.dhabits.ss.demo.domain.model.RoleDto;
+import com.dhabits.ss.demo.service.ResourceObjectService;
 import com.dhabits.ss.demo.service.RoleService;
-import com.dhabits.ss.demo.service.impl.ResourceObjectService;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.http.ResponseEntity;
@@ -39,8 +39,7 @@ public class ResourceController {
 
     @PostMapping("/{id}")
     public ResponseEntity<ResourceObjectDto> getResourceObject(@PathVariable Long id) {
-        return ok(objectService.getResourceObjectDtoById(id));
+        return objectService.getResourceObjectDtoById(id);
     }
-
 
 }

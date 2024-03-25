@@ -2,11 +2,12 @@ package com.dhabits.ss.demo.utils;
 
 import com.dhabits.ss.demo.domain.entity.ResourceObject;
 import com.dhabits.ss.demo.domain.entity.RoleEntity;
+import lombok.experimental.UtilityClass;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class JoinedRolesUtil {
+public final class JoinedRolesUtil {
     private JoinedRolesUtil() {
     }
 
