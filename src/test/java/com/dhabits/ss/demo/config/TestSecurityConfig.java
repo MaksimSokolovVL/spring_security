@@ -4,13 +4,11 @@ import com.dhabits.ss.demo.domain.entity.ResourceObject;
 import com.dhabits.ss.demo.domain.entity.RoleEntity;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import java.util.Arrays;
-import java.util.Set;
+import java.util.List;
 
 @TestConfiguration
 public class TestSecurityConfig {
@@ -22,7 +20,7 @@ public class TestSecurityConfig {
                 .path("path/admin")
                 .active(true)
                 .password("1")
-                .roles(Set.of(new RoleEntity("ROLE_ADMIN"), new RoleEntity("ROLE_USER")))
+                .roles(List.of(new RoleEntity("ROLE_ADMIN"), new RoleEntity("ROLE_USER")))
                 .build();
 
 
@@ -32,7 +30,7 @@ public class TestSecurityConfig {
                 .path("path/user")
                 .active(true)
                 .password("1")
-                .roles(Set.of(new RoleEntity("ROLE_USER")))
+                .roles(List.of(new RoleEntity("ROLE_USER")))
                 .build();
 
         return new InMemoryUserDetailsManager(Arrays.asList(admin, user));

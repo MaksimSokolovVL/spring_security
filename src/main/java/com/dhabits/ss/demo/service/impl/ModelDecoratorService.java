@@ -19,6 +19,8 @@ import org.springframework.validation.BindingResult;
 
 import java.util.List;
 
+import static java.util.Objects.isNull;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -57,7 +59,7 @@ public class ModelDecoratorService {
 
     public String saveResourceObject(ResourceObjectSaveRq saveRq, BindingResult bindingResult, Model model) {
         ResourceObjectDto resourceObjectDto = resourceObjectService.findByValue(saveRq.getValue());
-        if (resourceObjectDto != null) {
+        if (!isNull(resourceObjectDto)) {
             model.addAttribute("user_message", "Login exists!");
             model.addAttribute("tempUser", saveRq);
             prepareNewUserModel(model);

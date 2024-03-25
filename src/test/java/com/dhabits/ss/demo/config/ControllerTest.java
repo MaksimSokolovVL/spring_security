@@ -3,9 +3,11 @@ package com.dhabits.ss.demo.config;
 import com.dhabits.ss.demo.config.security.WebSecurityConfig;
 import com.dhabits.ss.demo.controller.AdminController;
 import com.dhabits.ss.demo.controller.ResourceController;
+import com.dhabits.ss.demo.domain.mapper.ResourceObjectMapper;
 import com.dhabits.ss.demo.service.ResourceObjectService;
 import com.dhabits.ss.demo.service.RoleService;
 import com.dhabits.ss.demo.service.UserService;
+import com.dhabits.ss.demo.service.impl.ModelDecoratorService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -30,4 +32,8 @@ public abstract class ControllerTest {
     protected UserService userService;
     @MockBean
     protected ResourceObjectService resourceObjectService;
+    @MockBean
+    protected ResourceObjectMapper resourceObjectMapper;
+    @MockBean
+    protected ModelDecoratorService modelDecoratorService;
 }
