@@ -26,12 +26,14 @@ public class AdminController {
         return "admin";
     }
 
+    //todo: переписать урлы на add_new_user
     @GetMapping("/addNewUser")
     public String addNewUser(Model model) {
         modelDecoratorService.prepareNewUserModel(model);
         return "add_user";
     }
 
+    //todo: переписать урлы на save_user
     @PostMapping("/saveUser")
     public String saveResourceObject(
             @Valid @ModelAttribute("edit_user") ResourceObjectSaveRq saveRq,

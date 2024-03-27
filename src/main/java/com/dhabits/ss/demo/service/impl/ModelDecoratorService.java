@@ -6,6 +6,7 @@ import com.dhabits.ss.demo.domain.model.ResourceObjectDto;
 import com.dhabits.ss.demo.domain.model.ResourceObjectRq;
 import com.dhabits.ss.demo.domain.model.ResourceObjectSaveRq;
 import com.dhabits.ss.demo.domain.model.RoleDto;
+import com.dhabits.ss.demo.service.AuthResourceObject;
 import com.dhabits.ss.demo.service.ResourceObjectService;
 import com.dhabits.ss.demo.service.RoleService;
 import com.dhabits.ss.demo.service.UserService;
@@ -28,11 +29,11 @@ public class ModelDecoratorService {
     private final UserService userService;
     private final RoleService roleService;
     private final ResourceObjectMapper objectMapper;
-    private final AuthService authService;
+    private final AuthResourceObject authResourceObject;
     private final ResourceObjectService resourceObjectService;
 
     public void editAdminModel(Model model, Authentication authentication) {
-        ResourceObject resourceObject = authService.getCurrentUser(authentication);
+        ResourceObject resourceObject = authResourceObject.getCurrentUser(authentication);
         model.addAttribute("rolesList", JoinedRolesUtil.joinRoles(resourceObject));
         model.addAttribute("userIn", objectMapper.toDto(resourceObject));
         List<ResourceObjectRq> listObjectRq = userService.getPreparedResourceObjectRq();
