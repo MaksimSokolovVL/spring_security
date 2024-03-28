@@ -1,20 +1,17 @@
 package com.dhabits.ss.demo.config.security;
 
 
-import com.dhabits.ss.demo.service.AuthJwt;
 import com.dhabits.ss.demo.service.UserService;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import jakarta.servlet.DispatcherType;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -23,7 +20,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.token.TokenService;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
@@ -39,7 +35,6 @@ import java.util.UUID;
 public class WebSecurityConfig {
     private final UserService userService;
     private final RsaKeys rsaKeys;
-    private final AuthJwt authJwt;
 
     private static final String[] PERMIT_ALL_URLS = {
             "/",
@@ -76,45 +71,30 @@ public class WebSecurityConfig {
         return http
                 .headers(x -> x.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
 //                .csrf(AbstractHttpConfigurer::disable)
-                .csrf(csrf -> csrf.ignoringRequestMatchers(IGNORED_RQ))
-                .cors(Customizer.withDefaults())
-                .userDetailsService(userService)
+                .csrf(cs -> cs.ignoringRequestMatchers(IGNORED_RQ))
+//                .cors(Customizer.withDefaults())
+                .cors(AbstractHttpConfigurer::disable)
+//                .userDetailsService(userService)
                 //todo /api/v1 добавить к апи
-//                .httpBasic(Customizer.withDefaults())
-                .httpBasic(AbstractHttpConfigurer::disable) // стандартная авторизация
+//                .httpBasic(AbstractHttpConfigurer::disable) // стандартная авторизация
+                .anonymous(AbstractHttpConfigurer::disable) // что бы не создавались анонимные сессии
                 .sessionManagement(sm -> sm.sessionCreationPolicy(
                         SessionCreationPolicy.STATELESS // Spring Security никогда не создаст HttpSession и никогда не будет использовать его для получения SecurityContext
                 ))
-                .exceptionHandling(exConfigurer ->  // выводит ошибку если юзер не авторизован
-                        exConfigurer.authenticationEntryPoint((request, response, exception) -> {
-                                            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                                            response.getWriter().write("Неавторизованный");
-                                        }
-                                )
-                                .accessDeniedHandler((request, response, exception) -> {
-                                            response.setStatus(HttpStatus.FORBIDDEN.value());
-                                            response.getWriter().write("Нет доступа к данному ресурсу");
-                                        }
-                                )
-                )
-                .anonymous(AbstractHttpConfigurer::disable) // что бы не создавались анонимные сессии
-                .addFilterBefore(new JwtTokenFilter(
-                        authJwt,
-                        userService
-                ))
+                .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(authz -> authz
-                        .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
-                        .requestMatchers("/admin").hasRole("ADMIN")
-                        .requestMatchers("/user").hasRole("USER")
-                        .requestMatchers(PERMIT_ALL_URLS).permitAll()
-                        .requestMatchers(HttpMethod.POST, "/resource").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/resource/role").hasRole("ADMIN")
-                        .anyRequest().authenticated()
+//                        .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
+                                .requestMatchers("/admin").hasRole("ADMIN")
+                                .requestMatchers("/user").hasRole("USER")
+                                .requestMatchers(PERMIT_ALL_URLS).permitAll()
+                                .requestMatchers(HttpMethod.POST, "/resource").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/resource/role").hasRole("ADMIN")
+                                .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2ResourceServer ->
                         oauth2ResourceServer
                                 .jwt(jwt -> jwt.decoder(jwtDecoder())))
-//                .formLogin(AbstractHttpConfigurer::disable)
+//              .formLogin(AbstractHttpConfigurer::disable)
                 .formLogin(form -> form
                         .loginPage("/login")
                         .defaultSuccessUrl("/")
@@ -151,5 +131,35 @@ public class WebSecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
+
+
+    /**
+     * //                .exceptionHandling(exConfigurer ->  // выводит ошибку если юзер не авторизован
+     * //                        exConfigurer.authenticationEntryPoint((request, response, exception) -> {
+     * //                                            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+     * //                                            response.getWriter().write("Unauthorized");
+     * //                                        }
+     * //                                )
+     * //                                .accessDeniedHandler((request, response, exception) -> {
+     * //                                            response.setStatus(HttpStatus.FORBIDDEN.value());
+     * //                                            response.getWriter().write("Нет доступа к данному ресурсу");
+     * //                                        }
+     * //                                )
+     * //                )
+     * //                .addFilterBefore(new JwtTokenFilter(
+     * //                        authJwt,
+     * //                        userService
+     * //                ))
+     *                 .authorizeHttpRequests(authz -> authz
+     * //                        .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
+     *.requestMatchers("/admin").hasRole("ADMIN")
+     *                         .requestMatchers("/user").hasRole("USER")
+     *                         .requestMatchers(PERMIT_ALL_URLS).permitAll()
+     *                         .requestMatchers(HttpMethod.POST, "/resource").permitAll()
+     *                         .requestMatchers(HttpMethod.POST, "/resource/role").hasRole("ADMIN")
+     *                         .anyRequest().authenticated()
+     *                 )
+
+     */
 
 }

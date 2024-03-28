@@ -2,7 +2,7 @@ spring:
   security:
     user:
       password: 1
-      name: test1
+      name: admin
 
   h2:
     console:

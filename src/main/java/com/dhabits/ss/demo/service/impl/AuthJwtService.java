@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthJwtService implements AuthJwt {
     private final AuthenticationManager authenticationManager;
-
     private final AccessTokenService accessTokenService;
 
     @Override

@@ -63,6 +63,11 @@
     text-align: center;
 }
 
+.label-form-x {
+    display: block;
+    width: 100%;
+}
+
 
 /*.label {*/
 /*    color: #f8d16d;*/
