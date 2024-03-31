@@ -33,7 +33,7 @@ public class AdminController {
         return "add_user";
     }
 
-    //todo: переписать урлы на save_user
+    //todo: переписать урлы на add_new_user
     @PostMapping("/saveUser")
     public String saveResourceObject(
             @Valid @ModelAttribute("edit_user") ResourceObjectSaveRq saveRq,

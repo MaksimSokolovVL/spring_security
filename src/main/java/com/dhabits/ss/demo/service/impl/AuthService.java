@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AuthService implements AuthResourceObject {
-    @Override
     public ResourceObject getCurrentUser(Authentication authentication) {
         return (ResourceObject) authentication.getPrincipal();
     }

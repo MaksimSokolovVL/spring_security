@@ -95,6 +95,8 @@ public class ResourceObjectServiceImpl implements ResourceObjectService {
         return objectMapper.toDto(resourceObjectRepo.findByValue(value).orElse(null));
     }
 
+
+
     @Override
     @Transactional
     public Long saveResourceObject(ResourceObjectSaveRq saveRq) {

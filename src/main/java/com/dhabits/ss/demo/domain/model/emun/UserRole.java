@@ -1,5 +1,8 @@
 package com.dhabits.ss.demo.domain.model.emun;
 
+import lombok.Getter;
+
+@Getter
 public enum UserRole {
     ADMIN("ROLE_ADMIN"),
     USER("ROLE_USER");
@@ -9,10 +12,4 @@ public enum UserRole {
     UserRole(String name) {
         this.name = name;
     }
-
-    public String getName() {
-        return name;
-    }
-
-
 }
